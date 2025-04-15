@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agendamento de Corte de Cabelo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f1f1;
+      padding: 30px;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .imagem-topo {
+      width: 100%;
+      height: auto;
+      border-radius: 10px 10px 0 0;
+      margin-bottom: 20px;
+      object-fit: cover;
+      max-height: 200px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input, select, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background: #25D366;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1ebe5d;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 15px;
+      }
+
+      .container {
+        padding: 15px;
+      }
+
+      input, select, textarea, button {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <img src="Ginger Sunny Just Living Photo Collage Facebook Cover.png" alt="Imagem de topo" class="imagem-topo" />
+  <h2>Agende seu Corte de Cabelo</h2>
+  <form id="agendamentoForm">
+    <input type="text" id="nome" placeholder="Seu nome" required />
+    <input type="tel" id="telefone" placeholder="Telefone para contato" required />
+    <input type="date" id="data" required />
+    <input type="time" id="hora" required />
+    <select id="servico" required>
+      <option value="">Selecione o serviço</option>
+      <option value="Corte Masculino">Corte Masculino</option>
+      <option value="Corte Feminino">Corte Feminino</option>
+      <option value="Corte Infantil">Corte Infantil</option>
+      <option value="Barba">Barba</option>
+    </select>
+    <textarea id="observacoes" placeholder="Observações (opcional)"></textarea>
+    <button type="submit">Enviar formulário</button>
+  </form>
+</div>
+
+<script>
+  function atualizarHora() {
+    const agora = new Date();
+    const hh = String(agora.getHours()).padStart(2, '0');
+    const mm = String(agora.getMinutes()).padStart(2, '0');
+    document.getElementById("hora").value = `${hh}:${mm}`;
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const hoje = new Date();
+    const yyyy = hoje.getFullYear();
+    const mm = String(hoje.getMonth() + 1).padStart(2, '0');
+    const dd = String(hoje.getDate()).padStart(2, '0');
+    const dataAtual = `${yyyy}-${mm}-${dd}`;
+    document.getElementById("data").value = dataAtual;
+
+    atualizarHora();
+    setInterval(atualizarHora, 60000);
+  });
+
+  document.getElementById("agendamentoForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const nome = document.getElementById("nome").value;
+    const telefone = document.getElementById("telefone").value;
+    const data = document.getElementById("data").value;
+    const hora = document.getElementById("hora").value;
+    const servico = document.getElementById("servico").value;
+    const observacoes = document.getElementById("observacoes").value;
+
+    const dataFormatada = data.split("-").reverse().join("/");
+
+    const mensagem = `Olá, William!%0A%0AGostaria de agendar um corte de cabelo.%0A%0A*Nome:* ${nome}%0A*Telefone:* ${telefone}%0A*Data:* ${dataFormatada}%0A*Hora:* ${hora}%0A*Serviço:* ${servico}%0A*Observações:* ${observacoes || "Nenhuma"}`;
+
+    const telefoneDestino = "5517992192532";
+    const url = `https://wa.me/${telefoneDestino}?text=${mensagem}`;
+
+    const win = window.open(url, "_blank");
+    if (!win) {
+      window.location.href = url;
+    }
+  });
+</script>
+
+</body>
+</html>
