@@ -76,7 +76,7 @@
 <body>
 
 <div class="container">
-  <img src="Ginger Sunny Just Living Photo Collage Facebook Cover.png" alt="Imagem de topo" class="imagem-topo" />
+  <img src="Ginger%20Sunny%20Just%20Living%20Photo%20Collage%20Facebook%20Cover.png" alt="Imagem de topo" class="imagem-topo" />
   <h2>Agende seu Corte de Cabelo</h2>
   <form id="agendamentoForm">
     <input type="text" id="nome" placeholder="Seu nome" required />
@@ -96,6 +96,8 @@
 </div>
 
 <script>
+  const agendamentos = [];
+
   function atualizarHora() {
     const agora = new Date();
     const hh = String(agora.getHours()).padStart(2, '0');
@@ -124,6 +126,15 @@
     const hora = document.getElementById("hora").value;
     const servico = document.getElementById("servico").value;
     const observacoes = document.getElementById("observacoes").value;
+
+    const horarioDuplicado = agendamentos.some(a => a.data === data && a.hora === hora);
+
+    if (horarioDuplicado) {
+      alert("Este horário já está agendado. Por favor, escolha outro.");
+      return;
+    }
+
+    agendamentos.push({ nome, telefone, data, hora, servico, observacoes });
 
     const dataFormatada = data.split("-").reverse().join("/");
 
